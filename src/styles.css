@@ -1,3 +1,140 @@
-h1{
-    color: goldenrod;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: #0d1117;
+  color: #e6edf3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: #161b22;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 80%;
+  overflow-x: auto;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #f0f6fc;
+}
+
+#current-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+#current-weather img {
+  width: 80px;
+  margin-bottom: 0.5rem;
+}
+
+#current-weather p {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #f0f6fc;
+}
+
+.icon-description {
+  display: block;
+  font-size: 1rem;
+  color: #8b949e;
+  font-weight: normal;
+  margin-top: 0.25rem;
+}
+
+/* Forecast section */
+.five-days {
+  border: 2rem solid wheat;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.five-days img{
+    object-fit: cover;
+}
+
+.five-days > div {
+  flex: 1;
+  margin: 0 4px;
+  background: #21262d;
+  padding: 0.75rem;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.five-days > div:hover {
+  background: #30363d;
+}
+
+.five-days p {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.max-degrees {
+  font-weight: bold;
+  color: #f0f6fc;
+}
+
+/* Button */
+button {
+  background: #238636;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #2ea043;
+}
+
+.weather-detials {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #21262d;
+  border-radius: 12px;
+  color: #c9d1d9;
+  display: none; /* toggle on button */
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    background-color: lightgreen;
+  }
+  .five-days {
+    border: 2px solid wheat;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .five-days > div {
+    border: 2px solid red;
+    flex: 1;
+    margin: 0 4px;
+    background: #21262d;
+    padding: 0.75rem;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+  }
 }
