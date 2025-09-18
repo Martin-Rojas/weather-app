@@ -52,9 +52,10 @@ async function getNextFiveDays() {
     const dayEl = weatherDays[index];
     const img = dayEl.querySelector("img");
     const maxDegreesEl = dayEl.querySelector(`.max-degrees`);
+    const minDegreesEl = dayEl.querySelector(`.min-degrees`);
 
     maxDegreesEl.innerHTML = `${Math.round(data.days[index].tempmax)}&deg`;
-
+    minDegreesEl.innerHTML = `${Math.round(data.days[index].tempmin)}&deg`
     img.setAttribute(`src`, `./images/${data.days[index].icon}.png`);
   }
 }
