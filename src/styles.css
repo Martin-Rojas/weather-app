@@ -87,7 +87,7 @@ h1 {
   margin: 0.25rem 0;
 }
 
-.max-degrees {
+.max-degrees, .min-degrees {
   font-weight: bold;
   color: #f0f6fc;
 }
