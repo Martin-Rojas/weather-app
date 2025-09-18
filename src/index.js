@@ -53,10 +53,17 @@ async function getNextFiveDays() {
     const img = dayEl.querySelector("img");
     const maxDegreesEl = dayEl.querySelector(`.max-degrees`);
     const minDegreesEl = dayEl.querySelector(`.min-degrees`);
+    const dayOfWeekEl = dayEl.querySelector(`.week-day`);
 
     maxDegreesEl.innerHTML = `${Math.round(data.days[index].tempmax)}&deg`;
-    minDegreesEl.innerHTML = `${Math.round(data.days[index].tempmin)}&deg`
+    minDegreesEl.innerHTML = `${Math.round(data.days[index].tempmin)}&deg`;
     img.setAttribute(`src`, `./images/${data.days[index].icon}.png`);
+
+    // Get day of the weeek
+    const dayNumber = new Date(data.days[index].datetime).getDay();
+    console.log(weekDays[dayNumber]);
+    
+    dayOfWeekEl.innerHTML = weekDays[dayNumber];
   }
 }
 
