@@ -13,6 +13,16 @@ const dayThreeEl = document.getElementById(`three-day`);
 const dayFourEl = document.getElementById(`four-day`);
 const dayFiveEl = document.getElementById(`five-day`);
 
+const btnDetails = document.getElementById(`btn-details`);
+const weatherDetails = document.getElementById(`weather-detials`);
+
+const tempFeelsLikeEl = document.querySelector(`#feels-like`);
+const humidityEl = document.getElementById(`humidity`);
+const windEl = document.getElementById(`wind`);
+const uvIndexEl = document.getElementById(`uvindex`);
+const sunriseEl = document.getElementById(`sunrise`);
+const sunsetEl = document.getElementById(`sunset`);
+
 // Get all 5 element in an array
 const weatherDays = [dayOneEl, dayTwoEl, dayThreeEl, dayFourEl, dayFiveEl];
 
@@ -42,6 +52,21 @@ async function displayCurrentWeather() {
 
   // Current icon description
   currentTempIconDescription.innerHTML = data.currentConditions.conditions;
+
+  // Current weather details
+  // templike
+  tempFeelsLikeEl.innerHTML =
+    "Temperture feels: " + data.currentConditions.feelslike + "&deg";
+  // humidity
+  humidityEl.innerHTML = `Humidity: ${data.currentConditions.humidity}%`;
+  // wind
+  windEl.innerHTML = `Wind: ${data.currentConditions.windspeed} mph`;
+  // Uv index
+  uvIndexEl.innerHTML = `UV index: ${data.currentConditions.uvindex}`;
+  // sunrise
+  sunriseEl.innerHTML = `Sunrise: ${data.currentConditions.sunrise}`;
+  // sunset
+  sunsetEl.innerHTML = `Sunset: ${data.currentConditions.sunset}`;
 }
 displayCurrentWeather();
 
@@ -62,9 +87,15 @@ async function getNextFiveDays() {
     // Get day of the weeek
     const dayNumber = new Date(data.days[index].datetime).getDay();
     console.log(weekDays[dayNumber]);
-    
+
     dayOfWeekEl.innerHTML = weekDays[dayNumber];
   }
 }
+
+// Btn event handler
+btnDetails.addEventListener(`click`, () => {
+  weatherDetails.style.display =
+    weatherDetails.style.display === "none" ? "block" : "none";
+});
 
 getNextFiveDays();
