@@ -87,7 +87,8 @@ h1 {
   margin: 0.25rem 0;
 }
 
-.max-degrees, .min-degrees {
+.max-degrees,
+.min-degrees {
   font-weight: bold;
   color: #f0f6fc;
 }
@@ -116,9 +117,8 @@ button:hover {
   color: #c9d1d9;
   transition: all 0.5s ease-in-out 0.1s;
 }
-.hidden{
-    display: block; /* toggle on button */
-
+.hidden {
+  display: block; /* toggle on button */
 }
 
 @media screen and (max-width: 800px) {
@@ -141,4 +141,55 @@ button:hover {
     border-radius: 12px;
     transition: background 0.3s ease;
   }
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  background: #1e1e2f;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  max-width: 400px;
+}
+
+form label {
+  font-size: 0.9rem;
+  font-weight: bolder;
+  color: #e0e0e0;
+}
+
+form input[type="text"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  background: #2b2b3d;
+  color: #f5f5f5;
+  flex: 1;
+  transition: border 0.2s ease;
+}
+
+form input[type="text"]:focus {
+  border: 1px solid #4aa3df;
+}
+
+form input[type="submit"] {
+  padding: 0.5rem 1rem;
+  background: #345469;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background: #357ab8;
 }

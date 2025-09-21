@@ -1,7 +1,6 @@
 import "./styles.css";
 
-const location = `Austin`;
-const APIUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=45P5NZGENNKHBPNP5YQZZC7NP`;
+let location = `Austin`;
 
 const addressEl = document.getElementById(`address`);
 const currentTempIcon = document.getElementById(`weather-icon`);
@@ -23,21 +22,25 @@ const uvIndexEl = document.getElementById(`uvindex`);
 const sunriseEl = document.getElementById(`sunrise`);
 const sunsetEl = document.getElementById(`sunset`);
 
+const formEL = document.getElementById(`form`);
+const inputFormEl = document.getElementById(`location`);
+
 // Get all 5 element in an array
 const weatherDays = [dayOneEl, dayTwoEl, dayThreeEl, dayFourEl, dayFiveEl];
 
 const weekDays = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
 
 // Get weather data from API
-async function getWeather() {
+async function getWeather(city) {
+  const APIUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=45P5NZGENNKHBPNP5YQZZC7NP`;
   const response = await fetch(APIUrl).catch((err) => console.log(err));
   const weatherData = await response.json();
 
   return weatherData;
 }
 
-async function displayCurrentWeather() {
-  const data = await getWeather();
+async function displayCurrentWeather(city) {
+  const data = await getWeather(city);
 
   // Address
   addressEl.innerHTML = data.resolvedAddress;
@@ -68,11 +71,10 @@ async function displayCurrentWeather() {
   // sunset
   sunsetEl.innerHTML = `Sunset: ${data.currentConditions.sunset}`;
 }
-displayCurrentWeather();
 
-async function getNextFiveDays() {
+async function getNextFiveDays(city) {
   // get data for next five days
-  const data = await getWeather();
+  const data = await getWeather(city);
   for (let index = 0; index < 5; index++) {
     const dayEl = weatherDays[index];
     const img = dayEl.querySelector("img");
@@ -98,4 +100,13 @@ btnDetails.addEventListener(`click`, () => {
     weatherDetails.style.display === "none" ? "block" : "none";
 });
 
-getNextFiveDays();
+// Handle the form submitted and save the value
+formEL.addEventListener(`submit`, (event) => {
+  event.preventDefault();
+  console.log(inputFormEl.value);
+  location = inputFormEl.value;
+
+  displayCurrentWeather(location);
+  getNextFiveDays(location);
+  console.log(location);
+});
