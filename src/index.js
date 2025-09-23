@@ -45,11 +45,13 @@ async function displayCurrentWeather(city) {
   // Address
   addressEl.innerHTML = data.resolvedAddress;
 
-  // Icon imgs
-  currentTempIcon.setAttribute(
-    `src`,
-    `./images/${data.currentConditions.icon}.png`
-  );
+  const imgIcon = document.createElement(`img`);
+  imgIcon.setAttribute(`src`, `./images/${data.currentConditions.icon}.png`);
+  imgIcon.setAttribute(`alt`, `icon-weather`);
+  imgIcon.setAttribute(`id`, `weather-icon`);
+
+  currentTempEl.parentNode.insertBefore(imgIcon, currentTempEl);
+
   // Current Temp
   currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}&deg`;
 
