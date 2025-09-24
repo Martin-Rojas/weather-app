@@ -45,6 +45,9 @@ async function displayCurrentWeather(city) {
   // Address
   addressEl.innerHTML = data.resolvedAddress;
 
+  // Switch header layout to row after we have data
+  document.querySelector(".header").classList.add("row");
+
   const imgIcon = document.createElement(`img`);
   imgIcon.setAttribute(`src`, `./images/${data.currentConditions.icon}.png`);
   imgIcon.setAttribute(`alt`, `icon-weather`);
