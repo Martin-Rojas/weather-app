@@ -4,6 +4,7 @@ let location = `Austin`;
 
 const addressEl = document.getElementById(`address`);
 const currentTempIcon = document.getElementById(`weather-icon`);
+const currentBtnDegrees = document.getElementById(`toggle-degrees`);
 const currentTempEl = document.getElementById(`temp`);
 const currentTempIconDescription = document.getElementById(`icon-description`);
 const dayOneEl = document.getElementById(`one-day`);
@@ -41,6 +42,7 @@ async function getWeather(city) {
 
 async function displayCurrentWeather(city) {
   const data = await getWeather(city);
+  let isCelsius = false;
 
   // Address
   addressEl.innerHTML = data.resolvedAddress;
@@ -56,7 +58,13 @@ async function displayCurrentWeather(city) {
   currentTempEl.parentNode.insertBefore(imgIcon, currentTempEl);
 
   // Current Temp
-  currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}&deg`;
+  currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}°F`;
+
+  // Toggle the temperature degrees
+  currentBtnDegrees.addEventListener(`click`, () => {
+    isCelsius = !isCelsius;
+    renderTemperatures(isCelsius, data);
+  });
 
   // Current icon description
   currentTempIconDescription.innerHTML = data.currentConditions.conditions;
@@ -115,3 +123,16 @@ formEL.addEventListener(`submit`, (event) => {
   getNextFiveDays(location);
   console.log(location);
 });
+
+// Render celsius or Fahrenheit
+function renderTemperatures(isCelsius, data) {
+  isCelsius
+    ? (currentTempEl.innerHTML = `${Math.round(
+        ((data.currentConditions.temp - 32) * 5) / 9
+      )}°C`)
+    : (currentTempEl.innerHTML = `${Math.round(
+        data.currentConditions.temp
+      )}°F`);
+  // Current Temp
+  //currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}&deg`;
+}
