@@ -31,6 +31,8 @@ const weatherDays = [dayOneEl, dayTwoEl, dayThreeEl, dayFourEl, dayFiveEl];
 
 const weekDays = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
 
+let isCelsius = false;
+
 // Get weather data from API
 async function getWeather(city) {
   const APIUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=45P5NZGENNKHBPNP5YQZZC7NP`;
@@ -42,7 +44,6 @@ async function getWeather(city) {
 
 async function displayCurrentWeather(city) {
   const data = await getWeather(city);
-  let isCelsius = false;
 
   // Address
   addressEl.innerHTML = data.resolvedAddress;
@@ -61,10 +62,10 @@ async function displayCurrentWeather(city) {
   currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}°F`;
 
   // Toggle the temperature degrees
-  currentBtnDegrees.addEventListener(`click`, () => {
-    isCelsius = !isCelsius;
-    renderTemperatures(isCelsius, data);
-  });
+  //   currentBtnDegrees.addEventListener(`click`, () => {
+  //     isCelsius = !isCelsius;
+  //     renderTemperatures(isCelsius, data);
+  //   });
 
   // Current icon description
   currentTempIconDescription.innerHTML = data.currentConditions.conditions;
@@ -97,11 +98,11 @@ async function getNextFiveDays(city) {
 
     maxDegreesEl.innerHTML = `${Math.round(data.days[index].tempmax)}&deg`;
     minDegreesEl.innerHTML = `${Math.round(data.days[index].tempmin)}&deg`;
+
     img.setAttribute(`src`, `./images/${data.days[index].icon}.png`);
 
     // Get day of the weeek
     const dayNumber = new Date(data.days[index].datetime).getDay();
-    console.log(weekDays[dayNumber]);
 
     dayOfWeekEl.innerHTML = weekDays[dayNumber];
   }
@@ -116,16 +117,27 @@ btnDetails.addEventListener(`click`, () => {
 // Handle the form submitted and save the value
 formEL.addEventListener(`submit`, (event) => {
   event.preventDefault();
-  console.log(inputFormEl.value);
+
   location = inputFormEl.value;
 
   displayCurrentWeather(location);
   getNextFiveDays(location);
-  console.log(location);
+});
+
+currentBtnDegrees.addEventListener("click", () => {
+  isCelsius = !isCelsius;
+  renderTemperatures();
+  for (let index = 0; index < 5; index++) {
+    const dayEl = weatherDays[index];
+    const maxDegreesEl = dayEl.querySelector(".max-degrees");
+    const minDegreesEl = dayEl.querySelector(".min-degrees");
+    renderTemperatures2(index, minDegreesEl, maxDegreesEl);
+  }
 });
 
 // Render celsius or Fahrenheit
-function renderTemperatures(isCelsius, data) {
+async function renderTemperatures() {
+  const data = await getWeather(location);
   isCelsius
     ? (currentTempEl.innerHTML = `${Math.round(
         ((data.currentConditions.temp - 32) * 5) / 9
@@ -133,6 +145,17 @@ function renderTemperatures(isCelsius, data) {
     : (currentTempEl.innerHTML = `${Math.round(
         data.currentConditions.temp
       )}°F`);
-  // Current Temp
-  //currentTempEl.innerHTML = `${Math.round(data.currentConditions.temp)}&deg`;
+}
+
+async function renderTemperatures2(index, minDegreesEl, maxDegreesEl) {
+  const data = await getWeather(location);
+  isCelsius
+    ? ((maxDegreesEl.innerHTML = `${Math.round(
+        ((data.days[index].tempmax - 32) * 5) / 9
+      )}°C`),
+      (minDegreesEl.innerHTML = `${Math.round(
+        ((data.days[index].tempmin - 32) * 5) / 9
+      )}°C`))
+    : ((maxDegreesEl.innerHTML = `${Math.round(data.days[index].tempmax)}°F`),
+      (minDegreesEl.innerHTML = `${Math.round(data.days[index].tempmin)}°F`));
 }
